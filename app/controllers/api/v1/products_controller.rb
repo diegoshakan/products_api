@@ -17,7 +17,7 @@ module Api
 
       # POST /products
       def create
-        @product = Product.new(product_params)
+        @product = Product.new(product_with_user_params)
 
         if @product.save
           render json: @product, status: :created, location: api_v1_product_url(@product)
@@ -28,7 +28,7 @@ module Api
 
       # PATCH/PUT /products/1
       def update
-        if @product.update(product_params)
+        if @product.update(product_with_user_params)
           render json: @product
         else
           render json: @product.errors, status: :unprocessable_entity
@@ -48,7 +48,11 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def product_params
-        params.require(:product).permit(:name, :description, :quantity, :price, :category_id)
+        params.require(:product).permit(:name, :description, :quantity, :price, :category_id, :user_id)
+      end
+
+      def product_with_user_params
+        product_params.merge({ user_id: params[:user_id] })
       end
     end
   end
