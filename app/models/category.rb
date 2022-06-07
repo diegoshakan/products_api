@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   belongs_to :user
 
-  has_many :products
+  has_many :products, dependent: :destroy
 
-  validates :name, uniqueness: { case_sensitive: true }
+  validates :name, presence: :true
 end
