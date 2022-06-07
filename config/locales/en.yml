@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+
+  errors:
+    category_doesnt_exist: "Esta categoria não existe!"
