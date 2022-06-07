@@ -1,11 +1,13 @@
 module Api
   module V1
     class ProductsController < ApplicationController
+      include Currentable, Validable
+      before_action :authorize_request
       before_action :set_product, only: %i[ show update destroy ]
 
       # GET /products
       def index
-        @products = Product.all
+        @products = current_user.products
 
         render json: @products
       end
@@ -19,8 +21,10 @@ module Api
       def create
         @product = Product.new(product_with_user_params)
 
-        if @product.save
-          render json: @product, status: :created, location: api_v1_product_url(@product)
+        if owner_user_id?
+          if @product.save
+            render json: @product, status: :created, location: api_v1_product_url(@product)
+          end
         else
           render json: @product.errors, status: :unprocessable_entity
         end
@@ -52,7 +56,7 @@ module Api
       end
 
       def product_with_user_params
-        product_params.merge({ user_id: params[:user_id] })
+        product_params.merge({ user: current_user })
       end
     end
   end

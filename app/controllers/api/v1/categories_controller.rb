@@ -1,11 +1,13 @@
 module Api
   module V1
     class CategoriesController < ApplicationController
+      include Currentable, Validable
+      before_action :authorize_request
       before_action :set_category, only: %i[ show update destroy ]
 
       # GET /categories
       def index
-        @categories = Category.all
+        @categories = current_user.categories
 
         render json: @categories
       end
@@ -52,7 +54,7 @@ module Api
       end
 
       def category_with_user_params
-        category_params.merge({ user_id: params[:user_id] })
+        category_params.merge({ user: current_user })
       end
     end
   end

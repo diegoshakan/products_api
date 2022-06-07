@@ -1,30 +1,30 @@
 require "rails_helper"
 
-RSpec.describe ProductsController, type: :routing do
+RSpec.describe Api::V1::ProductsController, type: :routing do
   describe "routing" do
+    let(:url) { "api/v1/products" }
     it "routes to #index" do
-      expect(get: "/products").to route_to("products#index")
+      expect(get: "#{url}").to route_to("#{url}#index")
     end
 
     it "routes to #show" do
-      expect(get: "/products/1").to route_to("products#show", id: "1")
+      expect(get: "#{url}/1").to route_to("#{url}#show", id: "1")
     end
 
-
     it "routes to #create" do
-      expect(post: "/products").to route_to("products#create")
+      expect(post: "#{url}").to route_to("#{url}#create")
     end
 
     it "routes to #update via PUT" do
-      expect(put: "/products/1").to route_to("products#update", id: "1")
+      expect(put: "#{url}/1").to route_to("#{url}#update", id: "1")
     end
 
     it "routes to #update via PATCH" do
-      expect(patch: "/products/1").to route_to("products#update", id: "1")
+      expect(patch: "#{url}/1").to route_to("#{url}#update", id: "1")
     end
 
     it "routes to #destroy" do
-      expect(delete: "/products/1").to route_to("products#destroy", id: "1")
+      expect(delete: "#{url}/1").to route_to("#{url}#destroy", id: "1")
     end
   end
 end
