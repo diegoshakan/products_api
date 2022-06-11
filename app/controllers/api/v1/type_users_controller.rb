@@ -1,7 +1,6 @@
 module Api
   module V1
     class TypeUsersController < ApplicationController
-      include Currentable
       before_action :authorize_request
       before_action :set_type_user, only: %i[ show update destroy ]
 
@@ -19,7 +18,7 @@ module Api
 
       # POST /type_users
       def create
-        @type_user = TypeUser.new(type_user_with_user_params)
+        @type_user = TypeUser.new(type_user_params)
 
         if @type_user.save
           render json: @type_user, status: :created, location: api_v1_type_user_url(@type_user)
@@ -30,7 +29,7 @@ module Api
 
       # PATCH/PUT /type_users/1
       def update
-        if @type_user.update(type_user_with_user_params)
+        if @type_user.update(type_user_params)
           render json: @type_user
         else
           render json: @type_user.errors, status: :unprocessable_entity
@@ -52,10 +51,6 @@ module Api
         def type_user_params
           params.require(:type_user).permit(:label, :description, :situation)
         end
-
-      def type_user_with_user_params
-        type_user_params.merge({ user: current_user })
-      end
     end
   end
 end

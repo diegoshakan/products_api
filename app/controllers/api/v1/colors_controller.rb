@@ -1,6 +1,7 @@
 module Api
   module V1
     class ColorsController < ApplicationController
+      before_action :authorize_request
       before_action :set_color, only: %i[ show update destroy ]
 
       # GET /colors

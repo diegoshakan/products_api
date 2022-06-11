@@ -1,6 +1,7 @@
 module Api
   module V1
     class SizesController < ApplicationController
+      before_action :authorize_request
       before_action :set_size, only: %i[ show update destroy ]
 
       # GET /sizes
