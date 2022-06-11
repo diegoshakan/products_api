@@ -7,12 +7,12 @@ module Api
       def index
         @product_variations = ProductVariation.all
 
-        render json: @product_variations
+        render json: @product_variations, include: [:images]
       end
 
       # GET /product_variations/1
       def show
-        render json: @product_variation
+        render json: @product_variation, include: [:images]
       end
 
       # POST /product_variations
@@ -48,7 +48,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_variation_params
-          params.require(:product_variation).permit(:situation, :product_id, :color_id, :size_id)
+          params.require(:product_variation).permit(:situation, :product_id, :color_id, :size_id, images: [])
         end
     end
   end
