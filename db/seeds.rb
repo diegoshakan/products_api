@@ -25,9 +25,9 @@ color2 = Color.create(label: "Azul", situation: "active")
 product1 = Product.create(name: "Cajado de Fogo", description: "Made in Terra Média",
                price_wholesale: 15.50, retail_price: 19.50, quantity: 20,
                category: category1, sub_category: sub_category1, situation: "active")
-product2 = Product.create(name: "Ferrão de Abelha", description: "Made in Terra Média",
+product2 = Product.create(name: "Ferroada", description: "Made in Terra Média",
                price_wholesale: 25.00, retail_price: 29.50, quantity: 5,
                category: category2, sub_category: sub_category2, situation: "active")
 
 ProductVariation.create(product: product1, color: color1, size: size1, situation: "active")
-ProductVariation.create(product: product2, color: color2, size: size1, situation: "active")
+ProductVariation.create(product: product2, color: color2, size: size1, situation: "active", images: [io: File.open('./storage/ferroada.jpg'), filename: 'ferroada.jpg'])
