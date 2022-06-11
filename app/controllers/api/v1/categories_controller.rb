@@ -1,13 +1,12 @@
 module Api
   module V1
     class CategoriesController < ApplicationController
-      include Currentable, Validable
       before_action :authorize_request
       before_action :set_category, only: %i[ show update destroy ]
 
       # GET /categories
       def index
-        @categories = current_user.categories
+        @categories = Category.all
 
         render json: @categories
       end
@@ -19,7 +18,7 @@ module Api
 
       # POST /categories
       def create
-        @category = Category.new(category_with_user_params)
+        @category = Category.new(category_params)
 
         if @category.save
           render json: @category, status: :created, location: api_v1_category_url(@category)
@@ -30,7 +29,7 @@ module Api
 
       # PATCH/PUT /categories/1
       def update
-        if @category.update(category_with_user_params)
+        if @category.update(category_params)
           render json: @category
         else
           render json: @category.errors, status: :unprocessable_entity
@@ -51,10 +50,6 @@ module Api
       # Only allow a list of trusted parameters through.
       def category_params
         params.require(:category).permit(:name)
-      end
-
-      def category_with_user_params
-        category_params.merge({ user: current_user })
       end
     end
   end

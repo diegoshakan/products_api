@@ -12,8 +12,11 @@ type_user2 = TypeUser.create(label: "normal", description: "simple user", situat
 user1 = User.create(username: "Gandalf", email:"gandalf@example.com", password: "changeme", password_confirmation: "changeme", type_user: type_user1)
 user2 = User.create(username: "Frodo", email:"frodo@example.com", password: "changeme", password_confirmation: "changeme", type_user: type_user2)
 
-category1 = Category.create(label: "Calçados", situation: "active")
-category2 = Category.create(label: "Bolsas", situation: "active")
+category1 = Category.create(label: "Cajado", situation: "active")
+category2 = Category.create(label: "Espada", situation: "active")
 
-Product.create(name: "Chinelo Rider", description: "Made in Brazil", price: 15.50, quantity: 20, category: category1, user: user1)
-Product.create(name: "Bolsa de Praia", description: "Made in Brazil", price: 25, quantity: 5, category: category2, user: user2)
+sub_category1 = SubCategory.create(label: "Fogo", situation: "active", category: category1)
+sub_category2 = SubCategory.create(label: "Adagas", situation: "active", category: category2)
+
+Product.create(name: "Cajado de Fogo", description: "Made in Terra Média", price: 15.50, quantity: 20, category: category1)
+Product.create(name: "Ferrão de Abelha", description: "Made in Terra Média", price: 25, quantity: 5, category: category2)

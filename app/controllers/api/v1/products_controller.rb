@@ -1,13 +1,12 @@
 module Api
   module V1
     class ProductsController < ApplicationController
-      include Currentable, Validable
       before_action :authorize_request
       before_action :set_product, only: %i[ show update destroy ]
 
       # GET /products
       def index
-        @products = current_user.products
+        @products = Product.all
 
         render json: @products
       end
@@ -19,7 +18,7 @@ module Api
 
       # POST /products
       def create
-        @product = Product.new(product_with_user_params)
+        @product = Product.new(product_params)
 
         if owner_user_id?
           if @product.save
@@ -32,7 +31,7 @@ module Api
 
       # PATCH/PUT /products/1
       def update
-        if @product.update(product_with_user_params)
+        if @product.update(product_params)
           render json: @product
         else
           render json: @product.errors, status: :unprocessable_entity
@@ -53,10 +52,6 @@ module Api
       # Only allow a list of trusted parameters through.
       def product_params
         params.require(:product).permit(:name, :description, :quantity, :price, :category_id, :user_id)
-      end
-
-      def product_with_user_params
-        product_params.merge({ user: current_user })
       end
     end
   end
