@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  belongs_to :type_user, optional: true
+
   has_many :categories
   has_many :products, through: :categories
 
