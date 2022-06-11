@@ -1,7 +1,7 @@
 module Api
   module V1
     class TypeUsersController < ApplicationController
-      include Currentable, Validable
+      include Currentable
       before_action :authorize_request
       before_action :set_type_user, only: %i[ show update destroy ]
 
