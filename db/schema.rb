@@ -10,12 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_11_145210) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_11_153704) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "label"
     t.string "situation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "colors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "label"
+    t.string "situation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_variations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "situation"
+    t.bigint "product_id", null: false
+    t.bigint "color_id", null: false
+    t.bigint "size_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["color_id"], name: "index_product_variations_on_color_id"
+    t.index ["product_id"], name: "index_product_variations_on_product_id"
+    t.index ["size_id"], name: "index_product_variations_on_size_id"
   end
 
   create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -31,6 +50,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_11_145210) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
+  end
+
+  create_table "sizes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "label"
+    t.string "situation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sub_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -60,6 +86,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_11_145210) do
     t.index ["type_user_id"], name: "index_users_on_type_user_id"
   end
 
+  add_foreign_key "product_variations", "colors"
+  add_foreign_key "product_variations", "products"
+  add_foreign_key "product_variations", "sizes"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "sub_categories"
   add_foreign_key "sub_categories", "categories"

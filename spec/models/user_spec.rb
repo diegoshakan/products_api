@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'associations' do
     it { should belong_to(:type_user).optional(:true) }
-    it { should have_many(:categories) }
-    it { should have_many(:products).through(:categories) }
   end
 
   describe 'validations' do

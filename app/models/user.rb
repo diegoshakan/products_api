@@ -3,9 +3,6 @@ class User < ApplicationRecord
 
   belongs_to :type_user, optional: true
 
-  has_many :categories
-  has_many :products, through: :categories
-
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, presence: true, uniqueness: true
