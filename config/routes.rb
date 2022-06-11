@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :categories
       resources :products
+      resources :sub_categories
       resources :type_users
       resources :users, param: :_username
     end
